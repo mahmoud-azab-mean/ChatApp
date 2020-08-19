@@ -1,0 +1,48 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col col-12 col-md-d">
+            <img src="/<%= userImage%>">
+        </div>
+        <div class="col col-12 col-md-d">
+            <h3><%= username%></h3> 
+            <% if (!isOwner) {%>
+                <form method="POST" id="frmProfile">
+                    <input id="myId" type="hidden" name="myId" value="<%= myId%>">
+                    <input id="myName" type="hidden" name="myName" value="<%= myName%>">
+                    <input id="myImage" type="hidden" name="myImage" value="<%= myImage%>">
+                    <input id="friendId" type="hidden" name="friendId" value="<%= friendId%>">
+                    <input id="friendName" type="hidden" name="friendName" value="<%= username%>">
+                    <input id="friendImage" type="hidden" name="friendImage" value="<%= userImage%>">
+                    <% if (isFriends) {%>
+                        <input type="submit" value="UN Friend" class="btn btn-danger" formaction="/friend/delete">
+                    <%} else if (isRequestsSent) {%>
+                        <input type="submit" value="Cancel Request" class="btn btn-danger" formaction="/friend/cancel">
+                    <% } else if(isRequestsRecieved) { %>
+                        <input type="submit" value="Accept Friend" class="btn btn-success" formaction="/friend/accept">
+                        <input type="submit" value="Reject Friend" class="btn btn-danger" formaction="/friend/reject">
+
+                    <% }  else { %> 
+                        <input id="addBtn" type="submit" value="Add Friend" class="btn btn-primary" formaction="/friend/add">
+
+                    <% } %>
+                </form>
+                <div>
+                    
+                </div>
+            <%}%>
+        </div>
+    </div>
+</div>
+<%- include('parts/footer') %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<% if(!isOwner && !isFriends &&!isRequestsSent &&!isRequestsRecieved ) { %>
+    <script src="/js/sockets/friend.js"></script>
+<% } %>
+
+
+</body>
+</html> 

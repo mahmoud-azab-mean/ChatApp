@@ -1,0 +1,43 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container">
+        <% if(users.length === 0) {%>
+            <div class="alert alert-danger">
+                there is no products
+            </div>
+        <% } else {%>
+        <div class="row">
+            <% for (let user of users) { %>
+                <div class="col col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="<%= user.image%>" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/profile/<%= user._id%>"><%= user.username%></a>
+                            </h5>
+                            <% if (!isOwner) {%>
+                                <form method="POST" id="frmProfile">
+                                    <input id="myId" type="hidden" name="myId" value="<%= myId%>">
+                                    <input id="myName" type="hidden" name="myName" value="<%= myName%>">
+                                    <input id="myImage" type="hidden" name="myImage" value="<%= myImage%>">
+                                    <input id="friendId" type="hidden" name="friendId" value="<%= friendId%>">
+                                    <input id="friendName" type="hidden" name="friendName" value="<%= username%>">
+                                    <input id="friendImage" type="hidden" name="friendImage" value="<%= userImage%>">
+                                    
+                                </form>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+    </div>
+    <%}%>
+<%- include('parts/footer') %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<script src="/js/sockets/home.js"></script>
+
+</body>
+</html> 

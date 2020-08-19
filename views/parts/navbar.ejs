@@ -1,0 +1,69 @@
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+    <a class="navbar-brand" routerLink="/">Chat App </a>
+    <button (click)="toggleNavbar()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" [class.show]="isOpen" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item <%= pageTitle ==='Home' ? 'active': '' %>">
+          <a class="nav-link" href="/" routerLinkActive="active" routerLinkActiveOptions="{exact: true}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <% if(isUser) {%>
+          <li class="nav-item <%= pageTitle ==='Members' ? 'active': '' %>">
+              <a class="nav-link" href="/Members" routerLinkActive="active">Members</a>
+            </li>
+          <li class="nav-item <%= pageTitle ==='Profile' ? 'active': '' %>">
+            <a class="nav-link" href="/profile" routerLinkActive="active">Profile</a>
+          </li>
+          <li class="nav-item <%= pageTitle ==='Groups' ? 'active': '' %>">
+              <a class="nav-link" href="/groups" routerLinkActive="active">Groups</a>
+            </li>
+            <li class="nav-item<%= pageTitle ==='Friends' ? 'active': '' %>" >
+              <a class="nav-link" href="/" routerLinkActive="active">Friends</a>
+            </li>
+            <li class="nav-item<%= pageTitle ==='Messags' ? 'active': '' %>">
+              <a class="nav-link" href="/Messags" routerLinkActive="active">Messags</a>
+            </li>
+        <%} else {%>
+          <li class="nav-item<%= pageTitle ==='login' ? 'active': '' %>">
+              <a class="nav-link" href="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item<%= pageTitle ==='signup' ? 'active': '' %>">
+              <a class="nav-link" href="/signup" routerLinkActive="active">SignUp</a>
+          </li>
+        <%}%>
+
+          <li class="nav-item<%= pageTitle ==='Home' ? 'active': '' %>">
+          <a class="nav-link" href="/add/group" routerLinkActive="active">Add Group</a>
+          </li>
+
+
+      </ul>
+
+      <% if(isUser) {%>
+        <input type="hidden" id="myId" value="<%= isUser%>">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="FriendRequestsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Friend Requets
+          </button>
+          <div id="friendRequests" class="dropdown-menu" aria-labelledby="FriendRequestsDropdown">
+            <% if (friendRequests.length === 0 ) {%>
+              <span>No Friend Requests</span>
+            <%}%>
+            <% for(let request of friendRequests) {%> 
+              <a class="dropdown-item" href="/profile/<%= request.id %>">
+                  <%= request.name %>  
+              </a>
+            <%}%>
+          </div>
+        </div>
+      <form action="/logout" method="POST">
+        <input type="submit" value="Logout" class="btn btn-danger">
+      </form>
+      <%}%>
+    </div>
+</div>
+</nav>
